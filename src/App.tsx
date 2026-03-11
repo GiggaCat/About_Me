@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  ExternalLink, 
-  Code2, 
-  Database, 
-  Zap, 
-  Terminal, 
-  Mail, 
-  MapPin, 
-  Rocket, 
-  CheckCircle2, 
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import {
+  Github,
+  Linkedin,
+  Twitter,
+  ExternalLink,
+  Code2,
+  Database,
+  Zap,
+  Terminal,
+  Mail,
+  MapPin,
+  Rocket,
+  CheckCircle2,
   ArrowRight,
   ChevronRight,
   Copy,
-  Plus
-} from 'lucide-react';
+  Plus,
+} from "lucide-react";
 
-import { supabase } from './lib/supabase';
+import { supabase } from "./lib/supabase";
 
 // Components
-import ParticleBackground from './components/ParticleBackground';
-import Navbar from './components/Navbar';
-import TiltCard from './components/TiltCard';
-import ScrambleText from './components/ScrambleText';
-import MagneticButton from './components/MagneticButton';
-import TypingTerminal from './components/TypingTerminal';
-import SkillOrbit from './components/SkillOrbit';
+import ParticleBackground from "./components/ParticleBackground";
+import Navbar from "./components/Navbar";
+import TiltCard from "./components/TiltCard";
+import ScrambleText from "./components/ScrambleText";
+import MagneticButton from "./components/MagneticButton";
+import TypingTerminal from "./components/TypingTerminal";
+import SkillOrbit from "./components/SkillOrbit";
 
 // Types
 interface Project {
   id: number;
   title: string;
   description: string;
-  category: 'Python' | 'Data' | 'Web' | 'Automation';
+  category: "Python" | "Data" | "Web" | "Automation";
   tags: string[];
   github: string;
   demo?: string;
@@ -45,89 +45,105 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'Personal Desktop Assistant',
-    description: 'Voice-activated Python automation using Pyttsx3, SpeechRecognition, and AI APIs for hands-free control.',
-    category: 'Automation',
-    tags: ['Python', 'AI APIs', 'SpeechRecognition'],
-    github: 'https://github.com/vansh-arora/assistant',
-    image: 'https://picsum.photos/seed/assistant/800/600',
+    title: "Personal Desktop Assistant",
+    description:
+      "Voice-activated Python automation using Pyttsx3, SpeechRecognition, and AI APIs for hands-free control.",
+    category: "Automation",
+    tags: ["Python", "AI APIs", "SpeechRecognition"],
+    github: "https://github.com/vansh-arora/assistant",
+    image: "https://picsum.photos/seed/assistant/800/600",
   },
   {
     id: 2,
-    title: 'Data Pipeline Automation',
-    description: 'ETL scripts for cleaning and processing large datasets using Pandas and SQL for efficient data management.',
-    category: 'Data',
-    tags: ['Pandas', 'SQL', 'ETL'],
-    github: 'https://github.com/vansh-arora/data-pipeline',
-    image: 'https://picsum.photos/seed/data/800/600',
+    title: "Data Pipeline Automation",
+    description:
+      "ETL scripts for cleaning and processing large datasets using Pandas and SQL for efficient data management.",
+    category: "Data",
+    tags: ["Pandas", "SQL", "ETL"],
+    github: "https://github.com/vansh-arora/data-pipeline",
+    image: "https://picsum.photos/seed/data/800/600",
   },
   {
     id: 3,
-    title: 'API Integration Hub',
-    description: 'Centralized API management system with robust authentication using FastAPI and JWT.',
-    category: 'Web',
-    tags: ['FastAPI', 'JWT', 'PostgreSQL'],
-    github: 'https://github.com/vansh-arora/api-hub',
-    image: 'https://picsum.photos/seed/api/800/600',
+    title: "API Integration Hub",
+    description:
+      "Centralized API management system with robust authentication using FastAPI and JWT.",
+    category: "Web",
+    tags: ["FastAPI", "JWT", "PostgreSQL"],
+    github: "https://github.com/vansh-arora/api-hub",
+    image: "https://picsum.photos/seed/api/800/600",
   },
   {
     id: 4,
-    title: 'Crypto Market Analyzer',
-    description: 'Real-time data analysis tool for market trends using Python APIs and D3.js visualization.',
-    category: 'Python',
-    tags: ['Python', 'WebSockets', 'D3.js'],
-    github: 'https://github.com/vansh-arora/crypto-analyzer',
-    image: 'https://picsum.photos/seed/crypto/800/600',
+    title: "Crypto Market Analyzer",
+    description:
+      "Real-time data analysis tool for market trends using Python APIs and D3.js visualization.",
+    category: "Python",
+    tags: ["Python", "WebSockets", "D3.js"],
+    github: "https://github.com/vansh-arora/crypto-analyzer",
+    image: "https://picsum.photos/seed/crypto/800/600",
   },
 ];
 
 const services = [
   {
-    title: 'Custom API Development',
-    description: 'RESTful APIs built with FastAPI/Flask, complete with documentation and authentication.',
+    title: "Custom API Development",
+    description:
+      "RESTful APIs built with FastAPI/Flask, complete with documentation and authentication.",
     icon: <Zap className="text-accent-cyan" size={24} />,
   },
   {
-    title: 'Data Automation',
-    description: 'ETL pipelines, data cleaning scripts, and reporting automation using Python.',
+    title: "Data Automation",
+    description:
+      "ETL pipelines, data cleaning scripts, and reporting automation using Python.",
     icon: <Database className="text-accent-cyan" size={24} />,
   },
   {
-    title: 'Database Design',
-    description: 'PostgreSQL schema design, optimization, and Supabase integration for real-time data.',
+    title: "Database Design",
+    description:
+      "PostgreSQL schema design, optimization, and Supabase integration for real-time data.",
     icon: <Code2 className="text-accent-cyan" size={24} />,
   },
   {
-    title: 'Web Scraping Solutions',
-    description: 'Intelligent data extraction systems with rotation handling and data validation.',
+    title: "Web Scraping Solutions",
+    description:
+      "Intelligent data extraction systems with rotation handling and data validation.",
     icon: <Terminal className="text-accent-cyan" size={24} />,
   },
 ];
 
 const stats = [
-  { label: 'Projects', value: 15, suffix: '+' },
-  { label: 'APIs Built', value: 8, suffix: '' },
-  { label: 'Automation Scripts', value: 25, suffix: '+' },
+  { label: "Projects", value: 15, suffix: "+" },
+  { label: "APIs Built", value: 8, suffix: "" },
+  { label: "Automation Scripts", value: 25, suffix: "+" },
 ];
 
 export default function App() {
-  const [filter, setFilter] = useState<'All' | 'Python' | 'Data' | 'Web' | 'Automation'>('All');
+  const [filter, setFilter] = useState<
+    "All" | "Python" | "Data" | "Web" | "Automation"
+  >("All");
   const [isCopied, setIsCopied] = useState(false);
-  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success">(
+    "idle",
+  );
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
 
-  const filteredProjects = projects.filter(p => filter === 'All' || p.category === filter);
+  const filteredProjects = projects.filter(
+    (p) => filter === "All" || p.category === filter,
+  );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -136,7 +152,7 @@ export default function App() {
   };
 
   const handleCopyEmail = () => {
-    const email = import.meta.env.VITE_CONTACT_EMAIL || 'vansh.dev@example.com';
+    const email = import.meta.env.VITE_CONTACT_EMAIL || "vansh.dev@example.com";
     navigator.clipboard.writeText(email);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
@@ -145,22 +161,22 @@ export default function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    
+
     const { name, email, message } = formData;
 
     // Validation
     const newErrors: { [key: string]: string } = {};
     if (!name || name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters long.';
+      newErrors.name = "Name must be at least 2 characters long.";
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      newErrors.email = 'Please enter a valid email address.';
+      newErrors.email = "Please enter a valid email address.";
     }
-    
+
     if (!message || message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long.';
+      newErrors.message = "Message must be at least 10 characters long.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -168,7 +184,7 @@ export default function App() {
       return;
     }
 
-    setFormStatus('loading');
+    setFormStatus("loading");
 
     const data = {
       name,
@@ -179,34 +195,37 @@ export default function App() {
 
     try {
       // Using local API proxy to avoid CORS issues with Supabase Edge Functions
-      const response = await fetch('/api/submit-contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        "https://jgqjldxflbljmlyovdvd.supabase.co/functions/v1/smooth-endpoint",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
-
+      );
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Submission failed:', errorText);
-        throw new Error('Submission failed');
+        console.error("Submission failed:", errorText);
+        throw new Error("Submission failed");
       }
 
-      setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus('idle'), 3000);
+      setFormStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setFormStatus("idle"), 3000);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
       // Fallback to success for demo purposes to ensure user experience
-      setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus('idle'), 3000);
+      setFormStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setFormStatus("idle"), 3000);
     }
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -225,9 +244,11 @@ export default function App() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
               <div className="w-2 h-2 rounded-full bg-green-500 pulse-green" />
-              <span className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Available for freelance</span>
+              <span className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">
+                Available for freelance
+              </span>
             </div>
-            
+
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">Hello</span>
               <motion.span
@@ -240,24 +261,42 @@ export default function App() {
             </div>
 
             <h1 className="text-5xl md:text-7xl mb-6 leading-tight">
-              I'm <ScrambleText text="Vansh Arora" className="text-accent-cyan" delay={500} />
+              I'm{" "}
+              <ScrambleText
+                text="Vansh Arora"
+                className="text-accent-cyan"
+                delay={500}
+              />
             </h1>
 
             <div className="h-8 mb-6 overflow-hidden">
               <motion.div
                 animate={{ y: [0, -32, -64, -96, 0] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="flex flex-col gap-2"
               >
-                <span className="text-xl md:text-2xl font-display text-text-secondary">Python Developer</span>
-                <span className="text-xl md:text-2xl font-display text-text-secondary">Data Engineer</span>
-                <span className="text-xl md:text-2xl font-display text-text-secondary">API Architect</span>
-                <span className="text-xl md:text-2xl font-display text-text-secondary">Automation Expert</span>
+                <span className="text-xl md:text-2xl font-display text-text-secondary">
+                  Python Developer
+                </span>
+                <span className="text-xl md:text-2xl font-display text-text-secondary">
+                  Data Engineer
+                </span>
+                <span className="text-xl md:text-2xl font-display text-text-secondary">
+                  API Architect
+                </span>
+                <span className="text-xl md:text-2xl font-display text-text-secondary">
+                  Automation Expert
+                </span>
               </motion.div>
             </div>
 
             <p className="text-lg text-text-primary max-w-lg mb-10 leading-relaxed">
-              Building intelligent automation systems, robust data pipelines, and scalable APIs that power modern applications.
+              Building intelligent automation systems, robust data pipelines,
+              and scalable APIs that power modern applications.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
@@ -281,13 +320,21 @@ export default function App() {
 
             <div className="flex items-center gap-6">
               <div className="flex flex-col">
-                <span className="text-2xl font-bold text-text-heading">1.2k+</span>
-                <span className="text-[10px] text-text-secondary uppercase tracking-widest">GitHub Stars</span>
+                <span className="text-2xl font-bold text-text-heading">
+                  1.2k+
+                </span>
+                <span className="text-[10px] text-text-secondary uppercase tracking-widest">
+                  GitHub Stars
+                </span>
               </div>
               <div className="w-px h-10 bg-border-subtle" />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold text-text-heading">50+</span>
-                <span className="text-[10px] text-text-secondary uppercase tracking-widest">Commits this month</span>
+                <span className="text-2xl font-bold text-text-heading">
+                  50+
+                </span>
+                <span className="text-[10px] text-text-secondary uppercase tracking-widest">
+                  Commits this month
+                </span>
               </div>
             </div>
           </motion.div>
@@ -302,10 +349,28 @@ export default function App() {
             {/* Floating Tech Stack */}
             <div className="absolute inset-0 z-0">
               {[
-                { icon: <Code2 />, color: '#00d4ff', x: -100, y: -150, delay: 0 },
-                { icon: <Database />, color: '#a855f7', x: 150, y: -100, delay: 0.5 },
-                { icon: <Github />, color: 'var(--text-title)', x: -150, y: 100, delay: 1 },
-                { icon: <Zap />, color: '#00d4ff', x: 100, y: 150, delay: 1.5 },
+                {
+                  icon: <Code2 />,
+                  color: "#00d4ff",
+                  x: -100,
+                  y: -150,
+                  delay: 0,
+                },
+                {
+                  icon: <Database />,
+                  color: "#a855f7",
+                  x: 150,
+                  y: -100,
+                  delay: 0.5,
+                },
+                {
+                  icon: <Github />,
+                  color: "var(--text-title)",
+                  x: -150,
+                  y: 100,
+                  delay: 1,
+                },
+                { icon: <Zap />, color: "#00d4ff", x: 100, y: 150, delay: 1.5 },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -317,7 +382,7 @@ export default function App() {
                     duration: 4,
                     repeat: Infinity,
                     delay: item.delay,
-                    ease: 'easeInOut',
+                    ease: "easeInOut",
                   }}
                   style={{
                     left: `calc(50% + ${item.x}px)`,
@@ -368,25 +433,46 @@ export default function App() {
             >
               <h2 className="text-4xl mb-8">The Journey</h2>
               <p className="text-lg text-text-primary mb-10 leading-relaxed">
-                My passion for coding started with a simple Python script to automate my daily tasks. Since then, I've evolved into a developer who loves building complex systems that bridge the gap between raw data and actionable insights.
+                My passion for coding started with a simple Python script to
+                automate my daily tasks. Since then, I've evolved into a
+                developer who loves building complex systems that bridge the gap
+                between raw data and actionable insights.
               </p>
 
               <div className="space-y-8 mb-12">
                 {[
-                  { title: 'Started Coding', desc: 'Discovered the power of Python automation.', year: '2021' },
-                  { title: 'First API', desc: 'Built a robust backend for a fintech startup.', year: '2022' },
-                  { title: 'Data Projects', desc: 'Specialized in ETL pipelines and data engineering.', year: '2023' },
+                  {
+                    title: "Started Coding",
+                    desc: "Discovered the power of Python automation.",
+                    year: "2021",
+                  },
+                  {
+                    title: "First API",
+                    desc: "Built a robust backend for a fintech startup.",
+                    year: "2022",
+                  },
+                  {
+                    title: "Data Projects",
+                    desc: "Specialized in ETL pipelines and data engineering.",
+                    year: "2023",
+                  },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6">
                     <div className="flex flex-col items-center">
                       <div className="w-4 h-4 rounded-full bg-accent-cyan shadow-[0_0_10px_rgba(0,212,255,0.5)]" />
-                      {i !== 2 && <div className="w-px flex-1 bg-border-subtle my-2" />}
+                      {i !== 2 && (
+                        <div className="w-px flex-1 bg-border-subtle my-2" />
+                      )}
                     </div>
                     <div>
-                      <h4 className="text-text-heading font-bold">{item.title}</h4>
+                      <h4 className="text-text-heading font-bold">
+                        {item.title}
+                      </h4>
                       <p className="text-sm text-text-secondary">{item.desc}</p>
                     </div>
-                    <span className="ml-auto text-xs font-mono text-accent-cyan/50">{item.year}</span>
+                    <span className="ml-auto text-xs font-mono text-accent-cyan/50">
+                      {item.year}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -400,15 +486,19 @@ export default function App() {
                       viewport={{ once: true }}
                       className="block text-2xl font-bold text-text-heading mb-1"
                     >
-                      {stat.value}{stat.suffix}
+                      {stat.value}
+                      {stat.suffix}
                     </motion.span>
-                    <span className="text-[10px] text-text-secondary uppercase tracking-widest">{stat.label}</span>
+                    <span className="text-[10px] text-text-secondary uppercase tracking-widest">
+                      {stat.label}
+                    </span>
                   </div>
                 ))}
               </div>
 
               <p className="mt-10 text-sm italic text-text-secondary">
-                "When not coding, I'm exploring cryptocurrency markets to understand data-driven decision making."
+                "When not coding, I'm exploring cryptocurrency markets to
+                understand data-driven decision making."
               </p>
             </motion.div>
           </div>
@@ -420,7 +510,8 @@ export default function App() {
         <div className="container mx-auto px-6 text-center mb-20">
           <h2 className="text-4xl mb-4">Technical Arsenal</h2>
           <p className="text-text-primary max-w-lg mx-auto">
-            A curated selection of technologies I use to build scalable and efficient solutions.
+            A curated selection of technologies I use to build scalable and
+            efficient solutions.
           </p>
         </div>
         <SkillOrbit />
@@ -433,20 +524,21 @@ export default function App() {
             <div>
               <h2 className="text-4xl mb-4">Featured Projects</h2>
               <p className="text-text-primary max-w-md">
-                A showcase of my work in automation, data engineering, and web development.
+                A showcase of my work in automation, data engineering, and web
+                development.
               </p>
             </div>
-            
+
             {/* Filter Buttons */}
             <div className="flex flex-wrap gap-2">
-              {['All', 'Python', 'Data', 'Web', 'Automation'].map((cat) => (
+              {["All", "Python", "Data", "Web", "Automation"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setFilter(cat as any)}
                   className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                    filter === cat 
-                      ? 'bg-accent-cyan text-slate-900 shadow-[0_0_15px_rgba(0,212,255,0.4)]' 
-                      : 'glass text-text-secondary hover:text-text-heading'
+                    filter === cat
+                      ? "bg-accent-cyan text-slate-900 shadow-[0_0_15px_rgba(0,212,255,0.4)]"
+                      : "glass text-text-secondary hover:text-text-heading"
                   }`}
                 >
                   {cat}
@@ -455,10 +547,7 @@ export default function App() {
             </div>
           </div>
 
-          <motion.div 
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-          >
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
                 <motion.div
@@ -483,13 +572,18 @@ export default function App() {
                         </div>
                       </div>
                       <div className="p-8 flex-1 flex flex-col">
-                        <h3 className="text-xl mb-3 group-hover:text-accent-cyan transition-colors">{project.title}</h3>
+                        <h3 className="text-xl mb-3 group-hover:text-accent-cyan transition-colors">
+                          {project.title}
+                        </h3>
                         <p className="text-text-primary text-sm mb-6 leading-relaxed">
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-8">
-                          {project.tags.map(tag => (
-                            <span key={tag} className="text-[10px] px-2 py-1 rounded bg-bg-surface text-text-secondary border border-border-subtle">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[10px] px-2 py-1 rounded bg-bg-surface text-text-secondary border border-border-subtle"
+                            >
                               {tag}
                             </span>
                           ))}
@@ -547,7 +641,9 @@ export default function App() {
                 <div className="w-14 h-14 rounded-2xl bg-bg-surface flex items-center justify-center mb-6 group-hover:bg-accent-cyan/10 group-hover:scale-110 transition-all duration-500">
                   {service.icon}
                 </div>
-                <h3 className="text-lg mb-4 group-hover:text-accent-cyan transition-colors">{service.title}</h3>
+                <h3 className="text-lg mb-4 group-hover:text-accent-cyan transition-colors">
+                  {service.title}
+                </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mb-6">
                   {service.description}
                 </p>
@@ -571,10 +667,12 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
               <div>
                 <h2 className="text-4xl md:text-5xl mb-8 leading-tight">
-                  Let's build something <span className="text-accent-cyan">amazing</span> together.
+                  Let's build something{" "}
+                  <span className="text-accent-cyan">amazing</span> together.
                 </h2>
                 <p className="text-lg text-text-primary mb-12">
-                  Whether you have a question or want to discuss a project, my inbox is always open.
+                  Whether you have a question or want to discuss a project, my
+                  inbox is always open.
                 </p>
 
                 <div className="space-y-6 mb-12">
@@ -583,14 +681,23 @@ export default function App() {
                       <Mail className="text-accent-cyan" size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-text-secondary uppercase tracking-widest mb-1">Email Me</p>
+                      <p className="text-xs text-text-secondary uppercase tracking-widest mb-1">
+                        Email Me
+                      </p>
                       <div className="flex items-center gap-3">
-                        <span className="text-text-heading font-bold">{import.meta.env.VITE_CONTACT_EMAIL || 'vansh.dev@example.com'}</span>
-                        <button 
+                        <span className="text-text-heading font-bold">
+                          {import.meta.env.VITE_CONTACT_EMAIL ||
+                            "vansh.dev@example.com"}
+                        </span>
+                        <button
                           onClick={handleCopyEmail}
                           className="p-1.5 rounded-lg hover:bg-bg-surface text-text-secondary hover:text-accent-cyan transition-all"
                         >
-                          {isCopied ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                          {isCopied ? (
+                            <CheckCircle2 size={16} />
+                          ) : (
+                            <Copy size={16} />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -601,10 +708,16 @@ export default function App() {
                       <MapPin className="text-accent-cyan" size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-text-secondary uppercase tracking-widest mb-1">Location</p>
+                      <p className="text-xs text-text-secondary uppercase tracking-widest mb-1">
+                        Location
+                      </p>
                       <div className="flex items-center gap-2">
-                        <span className="text-text-heading font-bold">New Delhi, India</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-bg-surface text-text-secondary border border-border-subtle">GMT+5:30</span>
+                        <span className="text-text-heading font-bold">
+                          New Delhi, India
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-bg-surface text-text-secondary border border-border-subtle">
+                          GMT+5:30
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -612,9 +725,18 @@ export default function App() {
 
                 <div className="flex gap-4">
                   {[
-                    { icon: <Github size={20} />, href: 'https://github.com/vansh-arora' },
-                    { icon: <Linkedin size={20} />, href: 'https://linkedin.com/in/vansh-arora' },
-                    { icon: <Twitter size={20} />, href: 'https://twitter.com/vansh_arora' },
+                    {
+                      icon: <Github size={20} />,
+                      href: "https://github.com/vansh-arora",
+                    },
+                    {
+                      icon: <Linkedin size={20} />,
+                      href: "https://linkedin.com/in/vansh-arora",
+                    },
+                    {
+                      icon: <Twitter size={20} />,
+                      href: "https://twitter.com/vansh_arora",
+                    },
                   ].map((social, i) => (
                     <a
                       key={i}
@@ -639,11 +761,11 @@ export default function App() {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Your Name"
-                        disabled={formStatus === 'loading'}
-                        className={`w-full bg-bg-surface border ${errors.name ? 'border-red-500/50' : 'border-border-subtle'} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all disabled:opacity-50`}
+                        disabled={formStatus === "loading"}
+                        className={`w-full bg-bg-surface border ${errors.name ? "border-red-500/50" : "border-border-subtle"} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all disabled:opacity-50`}
                       />
                       {errors.name && (
-                        <motion.p 
+                        <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           className="text-red-500 text-[10px] mt-2 ml-2 font-medium"
@@ -659,11 +781,11 @@ export default function App() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Your Email"
-                        disabled={formStatus === 'loading'}
-                        className={`w-full bg-bg-surface border ${errors.email ? 'border-red-500/50' : 'border-border-subtle'} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all disabled:opacity-50`}
+                        disabled={formStatus === "loading"}
+                        className={`w-full bg-bg-surface border ${errors.email ? "border-red-500/50" : "border-border-subtle"} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all disabled:opacity-50`}
                       />
                       {errors.email && (
-                        <motion.p 
+                        <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           className="text-red-500 text-[10px] mt-2 ml-2 font-medium"
@@ -680,11 +802,11 @@ export default function App() {
                       onChange={handleInputChange}
                       placeholder="Your Message"
                       rows={5}
-                      disabled={formStatus === 'loading'}
-                      className={`w-full bg-bg-surface border ${errors.message ? 'border-red-500/50' : 'border-border-subtle'} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all resize-none disabled:opacity-50`}
+                      disabled={formStatus === "loading"}
+                      className={`w-full bg-bg-surface border ${errors.message ? "border-red-500/50" : "border-border-subtle"} rounded-2xl px-6 py-4 text-text-heading placeholder:text-text-secondary focus:outline-none focus:border-accent-cyan/50 transition-all resize-none disabled:opacity-50`}
                     />
                     {errors.message && (
-                      <motion.p 
+                      <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-red-500 text-[10px] mt-2 ml-2 font-medium"
@@ -694,17 +816,21 @@ export default function App() {
                     )}
                   </div>
                   <button
-                    disabled={formStatus !== 'idle'}
+                    disabled={formStatus !== "idle"}
                     className="w-full py-5 rounded-2xl bg-linear-to-r from-accent-cyan to-accent-purple text-white font-bold text-lg shadow-[0_0_20px_rgba(0,212,255,0.2)] hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                   >
-                    {formStatus === 'idle' && (
-                      <>Send Message <Rocket size={20} /></>
+                    {formStatus === "idle" && (
+                      <>
+                        Send Message <Rocket size={20} />
+                      </>
                     )}
-                    {formStatus === 'loading' && (
+                    {formStatus === "loading" && (
                       <div className="w-6 h-6 border-2 border-text-heading/30 border-t-text-heading rounded-full animate-spin" />
                     )}
-                    {formStatus === 'success' && (
-                      <>Message Sent! <CheckCircle2 size={20} /></>
+                    {formStatus === "success" && (
+                      <>
+                        Message Sent! <CheckCircle2 size={20} />
+                      </>
                     )}
                   </button>
                 </form>
@@ -723,16 +849,21 @@ export default function App() {
             </span>
             <div className="w-1.5 h-1.5 rounded-full bg-accent-cyan" />
           </div>
-          
+
           <p className="text-sm text-text-secondary">
-            © 2024 Vansh Arora. Built with <span className="text-accent-cyan">Python logic</span> and coffee.
+            © 2024 Vansh Arora. Built with{" "}
+            <span className="text-accent-cyan">Python logic</span> and coffee.
           </p>
 
           <button
             onClick={scrollToTop}
             className="group flex items-center gap-2 text-xs font-bold text-text-heading hover:text-accent-cyan transition-all"
           >
-            BACK TO TOP <Rocket size={16} className="group-hover:-translate-y-1 transition-transform" />
+            BACK TO TOP{" "}
+            <Rocket
+              size={16}
+              className="group-hover:-translate-y-1 transition-transform"
+            />
           </button>
         </div>
       </footer>
