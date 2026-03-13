@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import {
   Github,
   Linkedin,
-  Twitter,
+  Instagram,
   ExternalLink,
   Code2,
   Database,
@@ -727,15 +727,15 @@ export default function App() {
                   {[
                     {
                       icon: <Github size={20} />,
-                      href: "https://github.com/vansh-arora",
+                      href: "https://github.com/GiggaCat",
                     },
                     {
                       icon: <Linkedin size={20} />,
-                      href: "https://linkedin.com/in/vansh-arora",
+                      href: "https://www.linkedin.com/in/vansharora234",
                     },
                     {
-                      icon: <Twitter size={20} />,
-                      href: "https://twitter.com/vansh_arora",
+                      icon: <Instagram size={20} />,
+                      href: "https://www.instagram.com/arora.vansh78?igsh=bnduYXI0Z3Vxbzdq",
                     },
                   ].map((social, i) => (
                     <a
