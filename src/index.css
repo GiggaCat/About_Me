@@ -52,6 +52,46 @@
 }
 
 @layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1280px;
+    }
+  }
+  
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1536px;
+    }
+  }
+}
+
+@layer components {
   .glass {
     @apply backdrop-blur-xl transition-all duration-300;
     background-color: var(--glass-bg);
@@ -59,6 +99,16 @@
   }
   .btn-magnetic {
     @apply transition-transform duration-300 ease-out;
+  }
+  
+  /* Fix for Chrome and other browsers - ensure proper box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Ensure consistent width calculation across browsers */
+  .container {
+    box-sizing: border-box;
   }
 }
 
